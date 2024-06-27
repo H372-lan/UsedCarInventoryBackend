@@ -21,7 +21,6 @@ public class inventorydetails {
     private String nearbylocation;
     private String phonenumber;
     private String email;
-//    private Date recordcreatedtime;
     @ManyToOne
     @JoinColumn(name = "pincode",nullable = false)
     private city city;
