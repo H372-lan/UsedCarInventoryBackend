@@ -26,8 +26,4 @@ public class city {
     @Pattern(regexp = "\\d{6}",message = "Enter Valid Pincode")
     private String pincode;
 
-
-
-//    @OneToMany(mappedBy = "city")
-//    private List<inventorydetails> inventories;
 }
