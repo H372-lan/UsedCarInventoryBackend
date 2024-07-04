@@ -33,6 +33,10 @@ public class InventoryServiceImpl implements InventoryService {
     {
         return (List<inventorydetails>) inventorydetailsrepo.findAll();
     }
+     public List<Integer> getInventorynumber()
+    {
+        return inventorydetailsrepo.getallinventorynumber();
+    }
 
     public inventorydetails getInventorydetailsByuniquecode(Integer inventorynumber )
     {
