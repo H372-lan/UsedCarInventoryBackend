@@ -17,4 +17,5 @@ public interface InventoryService {
     public String DeleteInventoryByUniqueCode(Integer inventorynumber);
     public List<Object[]> contactetailsofinventory();
     public Integer candeleteornotcity(String pincode);
+     public List<Integer> getInventorynumber();
 }
