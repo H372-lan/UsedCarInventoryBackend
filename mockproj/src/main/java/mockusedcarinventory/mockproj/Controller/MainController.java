@@ -252,5 +252,11 @@ public class MainController {
         else
             return "Can not delete";
     }
+     @GetMapping("/allinventorynumber")
+    @Transactional(readOnly = true)
+    public List<Integer> getallinventorynumbers()
+    {
+        return inventoryService.getInventorynumber();
+    }
 
 }
