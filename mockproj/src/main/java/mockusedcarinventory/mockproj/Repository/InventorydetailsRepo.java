@@ -22,6 +22,8 @@ public interface InventorydetailsRepo extends JpaRepository<inventorydetails,Int
     public List<Object[]> getcontactdetailsfrominventory();
     @Query(value="SELECT Count(*) FROM inventorydetails WHERE pincode=:pincode",nativeQuery = true)
     public Integer getallinventorycountbeforedeletecity(@Param("pincode") String pincode);
+    @Query(value = "SELECT inventorynumber FROM inventorydetails",nativeQuery = true)
+    public List<Integer> getallinventorynumber();
 
 
 }
