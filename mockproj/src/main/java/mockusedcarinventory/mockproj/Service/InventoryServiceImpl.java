@@ -37,6 +37,10 @@ public class InventoryServiceImpl implements InventoryService {
     {
         return inventorydetailsrepo.getallinventorynumber();
     }
+     public String getpincodefrominventorynum(Integer inventorynumber)
+    {
+        return  inventorydetailsrepo.getpinclodefrominventorynumber(inventorynumber);
+    }
 
     public inventorydetails getInventorydetailsByuniquecode(Integer inventorynumber )
     {
