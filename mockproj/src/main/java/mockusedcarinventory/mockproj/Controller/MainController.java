@@ -258,5 +258,11 @@ public class MainController {
     {
         return inventoryService.getInventorynumber();
     }
+       @GetMapping("/pincodefrominventorynumber{inventorynumber}")
+    @Transactional(readOnly = false)
+    public String getpincodefrominventorynumber(@PathVariable Integer inventorynumber)
+    {
+        return inventoryService.getpincodefrominventorynum(inventorynumber);
+    }
 
 }
