@@ -18,4 +18,5 @@ public interface InventoryService {
     public List<Object[]> contactetailsofinventory();
     public Integer candeleteornotcity(String pincode);
      public List<Integer> getInventorynumber();
+     public String getpincodefrominventorynum(Integer inventorynumber);
 }
