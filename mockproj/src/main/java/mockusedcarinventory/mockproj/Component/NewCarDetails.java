@@ -5,11 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 
-@Component
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,14 +16,14 @@ import java.sql.Date;
 @ToString
 public class NewCarDetails {
     @NotBlank(message = "Inventory number Fiels is mandatory")
-    private String inventorynumber;
+    private String inventoryNumber;
     @NotNull(message = "KM Driven Field is Mandatory")
-    @Min(value = 1,message = "Km Driven Can't be less than 0")
-    private int kmdriven;
+    @Min(value = 0,message = "Km Driven Can't be less than 0")
+    private int kmDriven;
     @NotNull(message = "Manufacture Date is Mandatory")
     private Date mfd;
     @NotBlank(message = "Type Of Car Fiels is mandatory")
-    private String typeofcar;
+    private String typeOfCar;
     @NotBlank(message = "Enter color of Car")
     private String color;
     @NotNull(message = "Enter milage of Car")

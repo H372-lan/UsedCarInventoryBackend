@@ -1,6 +1,6 @@
 package mockusedcarinventory.mockproj.Repository;
 
-import mockusedcarinventory.mockproj.Entity.inventorydetails;
+import mockusedcarinventory.mockproj.Entity.Inventorydetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,24 +8,24 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface InventorydetailsRepo extends JpaRepository<inventorydetails,Integer> {
-    @Query(value="SELECT IFNULL(MAX(inventorynumber),0) FROM inventorydetails",nativeQuery = true)
-    public int getValueofMaxInventoryNo();
+public interface InventorydetailsRepo extends JpaRepository<Inventorydetails,Integer> {
+    @Query(value="SELECT IFNULL(MAX(inventory_number),0) FROM inventory_details",nativeQuery = true)
+    public int maxInventoryNumber();
 
-    @Query(value="SELECT i.* "  + " FROM inventorydetails i " + "JOIN city c ON i.pincode = c.pincode " + " WHERE c.cityname=:cityname",nativeQuery = true)
-    public List<inventorydetails> getallinventorydetailsofacity(@Param("cityname") String cityname);
+    @Query(value="SELECT i.* "  + " FROM inventory_details i " + "JOIN City c ON i.pincode = c.pincode " + " WHERE c.city_name=:cityname",nativeQuery = true)
+    public List<Inventorydetails> inventoryDetailsOfCity(@Param("cityname") String cityname);
 
-    @Query(value="SELECT i.* " + " FROM inventorydetails i " + "JOIN city c ON i.pincode = c.pincode " + " WHERE c.pincode=:pincode",nativeQuery = true)
-    public List<inventorydetails> getallinventorydetailfrompincode(@Param("pincode") String pincode);
+    @Query(value="SELECT i.* " + " FROM inventory_details i " + "JOIN City c ON i.pincode = c.pincode " + " WHERE c.pincode=:pincode",nativeQuery = true)
+    public List<Inventorydetails> inventoryDetailsFromPincode(@Param("pincode") String pincode);
 
-    @Query(value = "SELECT inventorynumber,email,phonenumber FROM inventorydetails" ,nativeQuery=true)
-    public List<Object[]> getcontactdetailsfrominventory();
-    @Query(value="SELECT Count(*) FROM inventorydetails WHERE pincode=:pincode",nativeQuery = true)
-    public Integer getallinventorycountbeforedeletecity(@Param("pincode") String pincode);
-    @Query(value = "SELECT inventorynumber FROM inventorydetails",nativeQuery = true)
-    public List<Integer> getallinventorynumber();
-    @Query(value = "SELECT pincode FROM inventorydetails WHERE inventorynumber=:inventorynumber",nativeQuery = true)
-    public String getpinclodefrominventorynumber (@Param("inventorynumber") Integer inventorynumber);
+    @Query(value = "SELECT inventory_number,email,phonenumber FROM inventory_details" ,nativeQuery=true)
+    public List<Object[]> contactDetailsOfInventories();
+    @Query(value="SELECT Count(*) FROM inventory_details WHERE pincode=:pincode",nativeQuery = true)
+    public Integer countOfInventoryInPincode(@Param("pincode") String pincode);
+    @Query(value = "SELECT inventory_number FROM inventory_details",nativeQuery = true)
+    public List<Integer> allInventoryNumbers ();
+    @Query(value = "SELECT pincode FROM inventory_details WHERE inventory_number=:inventorynumber",nativeQuery = true)
+    public String pincodeFromInventoryNumber (@Param("inventorynumber") Integer inventorynumber);
 
 
 }

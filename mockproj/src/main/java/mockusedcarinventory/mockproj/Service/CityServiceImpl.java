@@ -1,71 +1,65 @@
 package mockusedcarinventory.mockproj.Service;
 
-import mockusedcarinventory.mockproj.Entity.city;
+import mockusedcarinventory.mockproj.Entity.City;
 import mockusedcarinventory.mockproj.Repository.CityRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class CityServiceImpl implements CityService{
     @Autowired
     private CityRepo cityRepository;
-    public List<Object[]> getCityInventoryCount()
+    public List<Object[]> cityDataWithInventoryCount()
     {
-        List<Object[]> results=cityRepository.getuniquecitywithcountofinventory();
+        List<Object[]> results=cityRepository.cityDataWithInventoryCount();
         return results;
-//        return results.stream().map(result->Map.of(
-//                "cityname",result[0],
-//                "inventorycount",result[2]
-//
-//        )).collect(Collectors.toList());
     }
-    public List<String> getallcountry()
+    public List<String> allCountry ()
     {
-        return cityRepository.getallcountryfromcitytable();
+        return cityRepository.allCountry();
     }
 
-    public List<String> getallstatesfromcountry(String country) {
-        return cityRepository.getallstatesfromcountry(country);
+    public List<String> allStatesInCountry(String country) {
+        return cityRepository.allStatesFromCountry(country);
     }
 
-    public List<Map<String,Object>> getcitydetailbypincode(String pincode)
+    public List<Map<String,Object>> cityDetailsByPincode (String pincode)
     {
 
-        return cityRepository.getcitydatafrompincode(pincode);
+        return cityRepository.cityDataFromPincode(pincode);
     }
-    public List<String> getcitynamefromstatename(String statename ,String country)
+    public List<String> cityNameFromStatename(String statename , String country)
     {
 
-        return cityRepository.getallcitiesfromstates(statename,country);
+        return cityRepository.allCitiesNameFromState(statename,country);
     }
-    public List<String> getpincodefromcityname(String cityname,String statename)
+    public List<String> allPincodeofCity(String cityname, String statename)
     {
 
-        return cityRepository.getallpincodefromcity(cityname,statename);
+        return cityRepository.allPincodeOfCity(cityname,statename);
     }
-    public String createcity(city newcitydata)
+    public String CreateCity(City newcitydata)
     {
-        List<Map<String,Object>> citydatacheck= getcitydetailbypincode(newcitydata.getPincode());
+        List<Map<String,Object>> citydatacheck= cityDetailsByPincode(newcitydata.getPincode());
         if(citydatacheck.isEmpty()) {
-            city citydata = new city();
+            City citydata = new City();
             citydata.setPincode(newcitydata.getPincode());
             citydata.setCountry(newcitydata.getCountry());
-            citydata.setStatename(newcitydata.getStatename());
-            citydata.setCityname(newcitydata.getCityname());
+            citydata.setStateName(newcitydata.getStateName());
+            citydata.setCityName(newcitydata.getCityName());
             cityRepository.save(citydata);
             return "City created Successfully";
         }
         return "Already Present";
     }
-    public List<city> getallcitydata()
+    public List<City> allCityData ()
     {
-        return cityRepository.getallcitydetails();
+        return cityRepository.findAll();
     }
-    public String Deletelocationbypincode(String pincode)
+    public String deleteLocationByPincode(String pincode)
     {
         cityRepository.deleteById(pincode);
         return "Successsfully Deleted";

@@ -1,16 +1,13 @@
 package mockusedcarinventory.mockproj.Service;
 
-import jakarta.validation.Valid;
 import mockusedcarinventory.mockproj.Component.NewInventoryDetails;
-import mockusedcarinventory.mockproj.Entity.city;
-import mockusedcarinventory.mockproj.Entity.inventorydetails;
+import mockusedcarinventory.mockproj.Entity.City;
+import mockusedcarinventory.mockproj.Entity.Inventorydetails;
 import mockusedcarinventory.mockproj.Repository.CityRepo;
 import mockusedcarinventory.mockproj.Repository.InventorydetailsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,49 +17,49 @@ public class InventoryServiceImpl implements InventoryService {
     public InventorydetailsRepo inventorydetailsrepo;
     @Autowired
     public  CityRepo cityRepo;
-    public List<inventorydetails> getallinventorydetailsbycityname(String cityname)
+    public List<Inventorydetails> inventoryDetailsOfCity (String cityname)
     {
-        return inventorydetailsrepo.getallinventorydetailsofacity(cityname);
+        return inventorydetailsrepo.inventoryDetailsOfCity(cityname);
     }
-    public List<inventorydetails> getallinventorydetailsbypincode(String pincode)
+    public List<Inventorydetails> inventorydetailsFromPincode(String pincode)
     {
-        return inventorydetailsrepo.getallinventorydetailfrompincode(pincode);
-    }
-
-    public List<inventorydetails> getAllInventoryInfo()
-    {
-        return (List<inventorydetails>) inventorydetailsrepo.findAll();
-    }
-     public List<Integer> getInventorynumber()
-    {
-        return inventorydetailsrepo.getallinventorynumber();
-    }
-     public String getpincodefrominventorynum(Integer inventorynumber)
-    {
-        return  inventorydetailsrepo.getpinclodefrominventorynumber(inventorynumber);
+        return inventorydetailsrepo.inventoryDetailsFromPincode(pincode);
     }
 
-    public inventorydetails getInventorydetailsByuniquecode(Integer inventorynumber )
+    public List<Inventorydetails> allInventoryDetails()
     {
-        Optional<inventorydetails> inventorydata=inventorydetailsrepo.findById(inventorynumber);
+        return (List<Inventorydetails>) inventorydetailsrepo.findAll();
+    }
+    public List<Integer> allInventoryNumber()
+    {
+        return inventorydetailsrepo.allInventoryNumbers();
+    }
+    public String pincodeOfInventoryNumber(Integer inventorynumber)
+    {
+        return  inventorydetailsrepo.pincodeFromInventoryNumber(inventorynumber);
+    }
+
+    public Inventorydetails inventoryDetailsByInventoryNumber(Integer inventorynumber )
+    {
+        Optional<Inventorydetails> inventorydata=inventorydetailsrepo.findById(inventorynumber);
         return  inventorydata.get();
     }
 
     public int maxValueOfInventoryNumber()
     {
-        return (inventorydetailsrepo.getValueofMaxInventoryNo());
+        return (inventorydetailsrepo.maxInventoryNumber());
     }
 
 
-    public String CreateInventory(NewInventoryDetails newInventoryDetails)
+    public String createInventory(NewInventoryDetails newInventoryDetails)
     {
-        city citydata= (cityRepo.findById(newInventoryDetails.getPincode()).orElseThrow(() -> new RuntimeException("City Not found with this Pincode" + newInventoryDetails.getPincode())));
-        inventorydetails inventorydata=new inventorydetails();
+        City citydata= (cityRepo.findById(newInventoryDetails.getPincode()).orElseThrow(() -> new RuntimeException("City Not found with this Pincode" + newInventoryDetails.getPincode())));
+        Inventorydetails inventorydata=new Inventorydetails();
         Integer MaxinventoryNum= maxValueOfInventoryNumber();
-        inventorydata.setInventorynumber(MaxinventoryNum + 1);
+        inventorydata.setInventoryNumber(MaxinventoryNum + 1);
         inventorydata.setCity(citydata);
-        inventorydata.setNearbylocation(newInventoryDetails.getNearbylocation());
-        inventorydata.setPhonenumber(newInventoryDetails.getPhonenumber());
+        inventorydata.setNearByLocation(newInventoryDetails.getNearByLocation());
+        inventorydata.setPhoneNumber(newInventoryDetails.getPhoneNumber());
         inventorydata.setEmail(newInventoryDetails.getEmail());
 //        Date currDate = new Date();
 //        Timestamp currtmstmp = new Timestamp(currDate.getTime());
@@ -71,18 +68,18 @@ public class InventoryServiceImpl implements InventoryService {
         return "Sucessfully Inventory Created";
 
     }
-    public inventorydetails UpdatedInventorydetails( NewInventoryDetails newInventoryDetails, Integer inventorynumber)
+    public Inventorydetails updatedInventorydetails(NewInventoryDetails newInventoryDetails, Integer inventorynumber)
     {
-        inventorydetails inventorydata = getInventorydetailsByuniquecode(inventorynumber);
+        Inventorydetails inventorydata = inventoryDetailsByInventoryNumber(inventorynumber);
         if(inventorydata!=null)
         {
-            city citydata= (cityRepo.findById(newInventoryDetails.getPincode())
+            City citydata= (cityRepo.findById(newInventoryDetails.getPincode())
                     .orElseThrow(() -> new RuntimeException("City Not found with this Pincode" + newInventoryDetails.getPincode())));
             inventorydata.setCity(citydata);
             inventorydata.setEmail(newInventoryDetails.getEmail());
-            inventorydata.setNearbylocation(newInventoryDetails.getNearbylocation());
-            inventorydata.setPhonenumber(newInventoryDetails.getPhonenumber());
-            inventorydetails inventoryupdated =inventorydetailsrepo.save(inventorydata);
+            inventorydata.setNearByLocation(newInventoryDetails.getNearByLocation());
+            inventorydata.setPhoneNumber(newInventoryDetails.getPhoneNumber());
+            Inventorydetails inventoryupdated =inventorydetailsrepo.save(inventorydata);
 
 
 //            inventorydata.setInventoryuniquecode(newInventoryDetails.getPincode()+"_"+inventorydata.getInventorynumber());
@@ -92,23 +89,27 @@ public class InventoryServiceImpl implements InventoryService {
             return null;
         }
     }
-    public String DeleteInventoryByUniqueCode(Integer inventorynumber)
+    public String deleteInventoryByInventoryNumber(Integer inventorynumber)
     {
         inventorydetailsrepo.deleteById(inventorynumber);
         return "Successsfully Deleted";
     }
 
-    public List<Object[]> contactetailsofinventory()
+    public List<Object[]> contactDetailsOfInventories()
     {
 
-        return  inventorydetailsrepo.getcontactdetailsfrominventory();
+        return  inventorydetailsrepo.contactDetailsOfInventories();
+    }
+
+    public Integer countOfInventoryInPincode(String pincode)
+    {
+        return inventorydetailsrepo.countOfInventoryInPincode(pincode);
     }
 
     public Integer candeleteornotcity(String pincode)
     {
-        return inventorydetailsrepo.getallinventorycountbeforedeletecity(pincode);
+        return inventorydetailsrepo.countOfInventoryInPincode(pincode);
     }
-
 
 
 

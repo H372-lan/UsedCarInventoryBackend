@@ -2,8 +2,8 @@ package mockusedcarinventory.mockproj.Service;
 
 import mockusedcarinventory.mockproj.Component.NewCarDetails;
 import mockusedcarinventory.mockproj.Component.Soldcardata;
-import mockusedcarinventory.mockproj.Entity.cardetails;
-import mockusedcarinventory.mockproj.Entity.soldcardetails;
+import mockusedcarinventory.mockproj.Entity.Cardetails;
+import mockusedcarinventory.mockproj.Entity.Soldcardetails;
 import mockusedcarinventory.mockproj.Repository.CardetailsRepo;
 import mockusedcarinventory.mockproj.Repository.SoldCardetailsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,76 +21,76 @@ public class CarServiceImpl implements CarService{
 
     @Autowired
     public SoldCardetailsRepo soldCardetailsRepo;
-    public cardetails getCardetailsBySalesno(Integer saleno )
+    public Cardetails carDetailsBySaleNo (Integer saleno )
     {
-        Optional<cardetails> cardata=cardetailsRepo.findById(saleno);
+        Optional<Cardetails> cardata=cardetailsRepo.findById(saleno);
         return  cardata.get();
     }
-    public List<cardetails> getAllCarsInfo()
+    public List<Cardetails> allCarData ()
     {
-        return (List<cardetails>) cardetailsRepo.findAll();
+        return (List<Cardetails>) cardetailsRepo.findAll();
     }
 
 
-    public int maxValueOfSalesvalue()
+    public int maxValueOfSaleNo ()
     {
 
-        return cardetailsRepo.getValueofmaxsaleno();
+        return cardetailsRepo.maxValueofSaleNo();
     }
-    public List<cardetails> getallcardetailsfromuniquecode(Integer inventorynumber)
+    public List<Cardetails> allCarDataFromInventoryNumber(Integer inventorynumber)
     {
-        return cardetailsRepo.getallcardetailswithuniquecode(inventorynumber);
+        return cardetailsRepo.carDetailsFromInventoryNumber(inventorynumber);
     }
-    public List<soldcardetails> getAllsoldcardetails()
+    public List<Soldcardetails> allSoldCarData ()
     {
-        return soldCardetailsRepo.getallcardetailswhicharesold();
+        return soldCardetailsRepo.findAll();
     }
 
-    public Integer candeleteornotinventory(Integer inventorynumber)
+    public Integer carCountInaInventory(Integer inventorynumber)
     {
-        return cardetailsRepo.getallcarcountbeforedeletefrominventorynumber(inventorynumber);
+        return cardetailsRepo.carCountInaInventory(inventorynumber);
     }
 
 
     public String CreateCar(NewCarDetails newCarDetails)
     {
-        cardetails cardata=new cardetails();
-        Integer MaxsalesNum= maxValueOfSalesvalue();
-        cardata.setSaleno(MaxsalesNum+1);
-        cardata.setInventorynumber(Integer.parseInt(newCarDetails.getInventorynumber()));
-        cardata.setKmdriven(newCarDetails.getKmdriven());
+        Cardetails cardata=new Cardetails();
+        Integer MaxsalesNum= maxValueOfSaleNo();
+        cardata.setSaleNo(MaxsalesNum+1);
+        cardata.setInventoryNumber(Integer.parseInt(newCarDetails.getInventoryNumber()));
+        cardata.setKmDriven(newCarDetails.getKmDriven());
         cardata.setPincode(newCarDetails.getPincode());
         cardata.setMfd(newCarDetails.getMfd());
-        cardata.setTypeofcar(newCarDetails.getTypeofcar());
+        cardata.setTypeOfCar(newCarDetails.getTypeOfCar());
         cardata.setColor(newCarDetails.getColor());
         cardata.setMilage(newCarDetails.getMilage());
         cardata.setModel(newCarDetails.getModel());
         Date currDate= new Date();
         Timestamp currtmstmp= new Timestamp(currDate.getTime());
-        cardata.setRecordcreatedtime(currtmstmp);
+        cardata.setRecordCreatedTime(currtmstmp);
         cardetailsRepo.save(cardata);
         return "Sucessfully Car Created";
 
     }
-    public cardetails UpdateCarDetailsbySalesno(NewCarDetails newCarDetails,Integer salesno)
+    public Cardetails UpdateCarDetails (NewCarDetails newCarDetails, Integer salesno)
     {
-        cardetails cardata=getCardetailsBySalesno(salesno);
+        Cardetails cardata= carDetailsBySaleNo(salesno);
         if(cardata!=null)
         {
-            cardata.setInventorynumber(Integer.parseInt(newCarDetails.getInventorynumber()));
+            cardata.setInventoryNumber(Integer.parseInt(newCarDetails.getInventoryNumber()));
             cardata.setPincode(newCarDetails.getPincode());
-            cardata.setKmdriven(newCarDetails.getKmdriven());
+            cardata.setKmDriven(newCarDetails.getKmDriven());
             cardata.setMfd(newCarDetails.getMfd());
-            cardata.setTypeofcar(newCarDetails.getTypeofcar());
+            cardata.setTypeOfCar(newCarDetails.getTypeOfCar());
             cardata.setColor(newCarDetails.getColor());
             cardata.setMilage(newCarDetails.getMilage());
             cardata.setModel(newCarDetails.getModel());
-            cardetails updateddata= cardetailsRepo.save(cardata);
+            Cardetails updateddata= cardetailsRepo.save(cardata);
             return updateddata;
         }
         else return null;
     }
-    public String DeleteCarbySalesno(Integer saleno)
+    public String DeleteCar (Integer saleno)
     {
         cardetailsRepo.deleteById(saleno);
         return "Successfully Deleted";
@@ -98,19 +98,19 @@ public class CarServiceImpl implements CarService{
 
     public String SoldCar(Soldcardata soldcardata, Integer saleno)
     {
-        cardetails cardata=getCardetailsBySalesno(saleno);
+        Cardetails cardata= carDetailsBySaleNo(saleno);
         if(cardata != null) {
-            soldcardetails cardatasold = new soldcardetails();
-            cardatasold.setSaleno(saleno);
-            cardatasold.setInventorynumber(soldcardata.getInventorynumber());
+            Soldcardetails cardatasold = new Soldcardetails();
+            cardatasold.setSaleNo(saleno);
+            cardatasold.setInventoryNumber(soldcardata.getInventoryNumber());
             cardatasold.setModel(soldcardata.getModel());
-            cardatasold.setTypeofcar(soldcardata.getTypeofcar());
+            cardatasold.setTypeOfCar(soldcardata.getTypeOfCar());
             cardatasold.setColor(soldcardata.getColor());
-            cardatasold.setAdharnumber(soldcardata.getAdharnumber());
-            cardatasold.setOwnername(soldcardata.getOwnername());
+            cardatasold.setAdharNumber(soldcardata.getAdharNumber());
+            cardatasold.setOwnerName(soldcardata.getOwnerName());
             cardatasold.setEmail(soldcardata.getEmail());
-            cardatasold.setPhonenumber(soldcardata.getPhonenumber());
-            cardatasold.setSellingdate(soldcardata.getSellingdate());
+            cardatasold.setPhoneNumber(soldcardata.getPhoneNumber());
+            cardatasold.setSellingDate(soldcardata.getSellingDate());
             soldCardetailsRepo.save(cardatasold);
             cardetailsRepo.deleteById(saleno);
             return "Car Solded Successfully";

@@ -1,22 +1,22 @@
 package mockusedcarinventory.mockproj.Service;
 import jakarta.validation.Valid;
 import mockusedcarinventory.mockproj.Component.NewInventoryDetails;
-import mockusedcarinventory.mockproj.Entity.inventorydetails;
-import org.springframework.stereotype.Service;
+import mockusedcarinventory.mockproj.Entity.Inventorydetails;
 
 import java.util.List;
 
 public interface InventoryService {
-    public List<inventorydetails> getallinventorydetailsbycityname(String cityname);
-    public List<inventorydetails> getallinventorydetailsbypincode(String pincode);
+    public List<Inventorydetails> inventoryDetailsOfCity(String cityname);
+    public List<Inventorydetails> inventorydetailsFromPincode(String pincode);
     public int maxValueOfInventoryNumber();
-    public String CreateInventory(NewInventoryDetails newInventoryDetails);
-    public inventorydetails getInventorydetailsByuniquecode(Integer inventorynumber );
-    public List<inventorydetails> getAllInventoryInfo();
-    public inventorydetails UpdatedInventorydetails(@Valid NewInventoryDetails newInventoryDetails, Integer inventorynumber);
-    public String DeleteInventoryByUniqueCode(Integer inventorynumber);
-    public List<Object[]> contactetailsofinventory();
+    public String createInventory(NewInventoryDetails newInventoryDetails);
+    public Inventorydetails inventoryDetailsByInventoryNumber(Integer inventorynumber );
+    public List<Inventorydetails> allInventoryDetails();
+    public Inventorydetails updatedInventorydetails(@Valid NewInventoryDetails newInventoryDetails, Integer inventorynumber);
+    public String deleteInventoryByInventoryNumber(Integer inventorynumber);
+    public List<Object[]> contactDetailsOfInventories();
+    public Integer countOfInventoryInPincode(String pincode);
+    public List<Integer> allInventoryNumber();
+    public String pincodeOfInventoryNumber(Integer inventorynumber);
     public Integer candeleteornotcity(String pincode);
-     public List<Integer> getInventorynumber();
-     public String getpincodefrominventorynum(Integer inventorynumber);
 }

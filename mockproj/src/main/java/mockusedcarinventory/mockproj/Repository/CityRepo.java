@@ -1,7 +1,6 @@
 package mockusedcarinventory.mockproj.Repository;
 
-import lombok.Value;
-import mockusedcarinventory.mockproj.Entity.city;
+import mockusedcarinventory.mockproj.Entity.City;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,24 +10,23 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface CityRepo extends JpaRepository<city,String> {
-    @Query(value="SELECT c.cityname AS cityname,c.statename AS statename ,COUNT(i.inventorynumber) AS inventorycount " +
-            "FROM city c  LEFT JOIN inventorydetails i  ON c.pincode=i.pincode " +
-            "GROUP BY c.cityname,c.statename " +
-            "HAVING (COUNT(i.inventorynumber))>0;",nativeQuery = true)
-    List<Object[]> getuniquecitywithcountofinventory();
-    @Query(value = "SELECT distinct(country) FROM city" ,nativeQuery=true)
-    public List<String> getallcountryfromcitytable();
-    @Query(value = "SELECT distinct(c.statename) FROM city c WHERE c.country=:country" ,nativeQuery=true)
-    public List<String> getallstatesfromcountry(@Param("country") String country);
-    @Query(value = "SELECT distinct(c.cityname) FROM city c WHERE (c.statename=:statename AND c.country=:country)" ,nativeQuery=true)
-    public List<String> getallcitiesfromstates(@Param("statename") String statename,@Param("country") String country);
-    @Query(value = "SELECT c.pincode FROM city c WHERE (c.cityname=:cityname AND c.statename=:statename)" ,nativeQuery=true)
-    public List<String> getallpincodefromcity(@Param("cityname") String cityname,@Param("statename") String statename);
-    @Query(value = "SELECT c.cityname,c.statename,c.country FROM city c WHERE c.pincode=:pincode" ,nativeQuery=true)
-    public List<Map<String,Object>> getcitydatafrompincode(@Param("pincode") String pincode);
-    @Query(value = "SELECT * FROM city ",nativeQuery = true)
-    public List<city> getallcitydetails();
+public interface CityRepo extends JpaRepository<City,String> {
+    @Query(value="SELECT c.city_name AS cityname,c.state_name AS statename ,COUNT(i.inventory_number) AS inventorycount " +
+            "FROM City c  LEFT JOIN inventory_details i  ON c.pincode=i.pincode " +
+            "GROUP BY c.city_name,c.state_name " +
+            "HAVING (COUNT(i.inventory_number))>0;",nativeQuery = true)
+    List<Object[]> cityDataWithInventoryCount();
+    @Query(value = "SELECT distinct(country) FROM City" ,nativeQuery=true)
+    public List<String> allCountry();
+    @Query(value = "SELECT distinct(c.state_name) FROM City c WHERE c.country=:country" ,nativeQuery=true)
+    public List<String> allStatesFromCountry (@Param("country") String country);
+    @Query(value = "SELECT distinct(c.city_name) FROM City c WHERE (c.state_name=:statename AND c.country=:country)" ,nativeQuery=true)
+    public List<String> allCitiesNameFromState(@Param("statename") String statename, @Param("country") String country);
+    @Query(value = "SELECT c.pincode FROM City c WHERE (c.city_name=:cityname AND c.state_name=:statename)" ,nativeQuery=true)
+    public List<String> allPincodeOfCity (@Param("cityname") String cityname, @Param("statename") String statename);
+    @Query(value = "SELECT c.city_name,c.state_name,c.country FROM City c WHERE c.pincode=:pincode" ,nativeQuery=true)
+    public List<Map<String,Object>> cityDataFromPincode (@Param("pincode") String pincode);
+
 
 
 
