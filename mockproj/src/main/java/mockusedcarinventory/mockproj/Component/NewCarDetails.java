@@ -29,6 +29,8 @@ public class NewCarDetails {
     @NotNull(message = "Enter milage of Car")
     @Min(value = 1,message = "Milage Can't less than 1")
     private int milage;
+    @NotBlank(message = "Enter make of Car")
+    private String make;
     @NotBlank(message = "Enter model of Car")
     private String model;
     @Pattern(regexp = "\\d{6}",message = "Enter Valid Pincode")

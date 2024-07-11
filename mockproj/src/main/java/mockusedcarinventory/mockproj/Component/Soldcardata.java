@@ -17,6 +17,8 @@ import java.sql.Date;
 public class Soldcardata {
     @NotNull(message = "Inventory Number Field is Mandatory")
     private Integer inventoryNumber;
+    @NotBlank(message = "Make Field is Mandatory")
+    private String make;
     @NotBlank(message = "Model Field is Mandatory")
     private String model;
     @NotBlank(message = "Type of Car Field is Mandatory")

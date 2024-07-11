@@ -29,6 +29,8 @@ public class Cardetails {
     private String color;
     @Column(name="milage")
     private int milage;
+    @Column(name="make")
+    private String make;
     @Column(name="model")
     private String model;
     @Column(name="pincode")

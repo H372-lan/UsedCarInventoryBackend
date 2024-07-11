@@ -59,6 +59,7 @@ public class CarServiceImpl implements CarService{
         cardata.setSaleNo(MaxsalesNum+1);
         cardata.setInventoryNumber(Integer.parseInt(newCarDetails.getInventoryNumber()));
         cardata.setKmDriven(newCarDetails.getKmDriven());
+        cardata.setMake(newCarDetails.getMake());
         cardata.setPincode(newCarDetails.getPincode());
         cardata.setMfd(newCarDetails.getMfd());
         cardata.setTypeOfCar(newCarDetails.getTypeOfCar());
@@ -84,6 +85,7 @@ public class CarServiceImpl implements CarService{
             cardata.setTypeOfCar(newCarDetails.getTypeOfCar());
             cardata.setColor(newCarDetails.getColor());
             cardata.setMilage(newCarDetails.getMilage());
+            cardata.setMake(newCarDetails.getMake());
             cardata.setModel(newCarDetails.getModel());
             Cardetails updateddata= cardetailsRepo.save(cardata);
             return updateddata;
@@ -104,6 +106,7 @@ public class CarServiceImpl implements CarService{
             cardatasold.setSaleNo(saleno);
             cardatasold.setInventoryNumber(soldcardata.getInventoryNumber());
             cardatasold.setModel(soldcardata.getModel());
+            cardatasold.setMake(soldcardata.getMake());
             cardatasold.setTypeOfCar(soldcardata.getTypeOfCar());
             cardatasold.setColor(soldcardata.getColor());
             cardatasold.setAdharNumber(soldcardata.getAdharNumber());

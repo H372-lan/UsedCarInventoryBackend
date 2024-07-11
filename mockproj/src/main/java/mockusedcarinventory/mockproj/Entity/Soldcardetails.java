@@ -21,6 +21,8 @@ public class Soldcardetails {
     private Integer saleNo;
     @Column(name="inventory_number")
     private Integer inventoryNumber;
+    @Column(name="make")
+    private String make;
     @Column(name="model")
     private String model;
     @Column(name="type_car")
