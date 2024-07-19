@@ -72,7 +72,6 @@ public class CityController {
             }
             return errors.toString();
         }
-//        City citydatareturn=cityService.createcity(citydata);
         return cityService.CreateCity(citydata);
     }
     @DeleteMapping("/delete/city/{pincode}")

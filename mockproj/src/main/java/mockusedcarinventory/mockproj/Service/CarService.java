@@ -18,4 +18,5 @@ public interface CarService {
     public Integer carCountInaInventory(Integer inventorynumber);
     public String SoldCar(Soldcardata soldcardata, Integer saleno);
     public List<Soldcardetails> allSoldCarData();
+
 }

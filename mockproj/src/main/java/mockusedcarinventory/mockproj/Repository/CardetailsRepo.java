@@ -15,4 +15,5 @@ public interface CardetailsRepo extends JpaRepository<Cardetails,Integer> {
 
     @Query(value="SELECT Count(*) FROM car_details WHERE inventory_number=:inventorynumber",nativeQuery = true)
     public Integer carCountInaInventory(@Param("inventorynumber") Integer inventorynumber);
+
 }

@@ -91,4 +91,7 @@ public class CarController {
     {
         return  carService.allSoldCarData();
     }
+
+
+
 }

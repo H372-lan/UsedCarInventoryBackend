@@ -18,14 +18,27 @@ public interface InventorydetailsRepo extends JpaRepository<Inventorydetails,Int
     @Query(value="SELECT i.* " + " FROM inventory_details i " + "JOIN City c ON i.pincode = c.pincode " + " WHERE c.pincode=:pincode",nativeQuery = true)
     public List<Inventorydetails> inventoryDetailsFromPincode(@Param("pincode") String pincode);
 
-    @Query(value = "SELECT inventory_number,email,phonenumber FROM inventory_details" ,nativeQuery=true)
-    public List<Object[]> contactDetailsOfInventories();
     @Query(value="SELECT Count(*) FROM inventory_details WHERE pincode=:pincode",nativeQuery = true)
     public Integer countOfInventoryInPincode(@Param("pincode") String pincode);
     @Query(value = "SELECT inventory_number FROM inventory_details",nativeQuery = true)
     public List<Integer> allInventoryNumbers ();
     @Query(value = "SELECT pincode FROM inventory_details WHERE inventory_number=:inventorynumber",nativeQuery = true)
     public String pincodeFromInventoryNumber (@Param("inventorynumber") Integer inventorynumber);
+
+    @Query(value="SELECT inventory_details.inventory_number, City.city_name, inventory_details.pincode, inventory_details.near_by_location,inventory_details.email,inventory_details.phonenumber\n" +
+            "FROM inventory_details \n" +
+            "JOIN City ON inventory_details.pincode=City.pincode;" ,nativeQuery = true)
+    public List<Object[]> contactDetailsOfInventories();
+
+
+
+
+
+
+
+
+
+
 
 
 }
